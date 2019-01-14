@@ -858,7 +858,7 @@ def set_factor_order(derived_unit_list):
     derived units withing a complex dimension.
 
     :params derived_unit_list: A list of derived unit names and/or
-    abbreviations.
+        abbreviations.
     """
     du = []
     for s in derived_unit_list:
