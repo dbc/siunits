@@ -10,7 +10,8 @@ Class definitions:
 Lists of the defined units:
 ---------------------------
 
-.. automodule:: siunits
-   :members: base_units, derived_units
+.. currentmodule:: siunits
+.. autodata:: base_units
+.. autodata:: derived_units
 
 
