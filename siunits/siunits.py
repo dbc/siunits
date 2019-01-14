@@ -816,11 +816,17 @@ class Dn:
 def prefer(dimension_str):
     """Set an override string to display a complex dimension as
     explicitly specified.
+
     :param dimension_str: The dimension as a string.
     """
     Dimension.prefer(dimension_str)
 
 def sqrt(dimensioned_number):
+    """Take the square root of a Dn() instance. All of the
+    dimension exponents must be divisible by 2.
+
+    :param dimensioned_number: A Dn() instance.
+    """
     return dimensioned_number.sqrt()
 
 def root(dimensioned_number, n):
