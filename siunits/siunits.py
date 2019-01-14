@@ -573,12 +573,14 @@ derived_units = [
 ]
 """SI derived units."""
 
+# FIXME: Design/implement a decent default factoring order.
 # Set up the order to factor out derived units.
 DerivedUnit.set_factor_order([
     Unit.of['W'],
     Unit.of['N'],
 ])
 
+# FIXME: Implement a default set of preferences, as necessary.
 # Set up display traps for things that come out strangely using the canonical
 # conversion in __str__().
 #Dimension.prefer('Ohm/m^2')
@@ -823,22 +825,56 @@ def prefer(dimension_str):
 
 def sqrt(dimensioned_number):
     """Take the square root of a Dn() instance. All of the
-    dimension exponents must be divisible by 2.
+    dimension exponents must be divisible by 2.  math.sqrt()
+    is called on the numeric part of the Dn().
 
     :param dimensioned_number: A Dn() instance.
+    :returns: A Dn() instance.
     """
     return dimensioned_number.sqrt()
 
 def root(dimensioned_number, n):
+    """Take the n-th rood of a Dn() instance.  All of the
+    dimension exponents must be divisible by n.  math.pow() is
+    called with an exponent of 1.0/float(n) on the numeric
+    part of the dimensioned number.
+
+    :param dimensioned_number: A Dn() instance.
+    :param n: A positive integer.
+    :returns: A Dn() instance.
+    """
     return dimensioned_number.root(n)
 
 def unit_of(s):
+    """Find a unit for *s*, or raise.
+
+    :param s: A unit name, unit abbrevation, or unit description.
+    :returns: An instance of BaseUnit() or DerivedUnit().
+    """
     return Unit.of[s]
 
 def set_factor_order(derived_unit_list):
-    DerivedUnit.set_factor_order(derived_unit_list)
+    """Set the prefered factoring order for attempting to find
+    derived units withing a complex dimension.
+
+    :params derived_unit_list: A list of derived unit names and/or
+    abbreviations.
+    """
+    du = []
+    for s in derived_unit_list:
+        u = Unit.of[s]
+        if not isinstance(u, DerivedUnit):
+            raise ValueError(' '.join([s, 'is not a DerivedUnit.']))
+        if u in du:
+            raise ValueError(' '.join(s, 'duplicated.'))
+        du.append(u)
+    DerivedUnit.set_factor_order(du)
 
 def unit_definitions():
+    """Convenience function to get the set of all unit definitions.
+
+    :returns: The set of unit definitions.
+    """
     return Unit._all
 
 __all__ = ['Dn', 'sqrt', 'root', 'unit_of', 'set_factor_order',
