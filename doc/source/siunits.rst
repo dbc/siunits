@@ -21,7 +21,7 @@ functionality.
 siunits Getting Started Guide
 =============================
 
-The main interface to the siunits module is the ``Dn()``, 
+The main interface to the siunits module is the ``Dn()`` 
 "dimensioned number" class. 
 A dimensioned number supports normal arithmetic, but in 
 addition to a numeric value, the dimenions are carried along
@@ -98,13 +98,13 @@ The ``Dn()`` constructor can also be called in other forms:
   to writing Dn(4, 'kg').
 
 The form ``Dn('number-units')`` string form is not quite as general as the 
-(value, dimension) form of the constructor because the parser makes
-certain assumptions about the number contained in the string it
+``Dn(value, dimension)`` form of the constructor because the parser makes
+a few assumptions about the number contained in the string it
 is parsing.  If the string begins with a digit, it calls ``float()``
 on the numeric part to construct a floating point dimensioned number.
-If the string begins with a paren, then it calls ``complex()`` on
+If the string begins with a paren ``'('``, then it calls ``complex()`` on
 the number part of the string.  If the string begins with a 
-bracket, it calls ``numpy.array()`` on the string.  So: ::
+bracket, ``'['`` then it calls ``numpy.array()`` on the string.  So: ::
 
   - Dn('200K') is equivalent to: Dn(float(200), 'K')
   - Dn('(3+2j)A') is equivalent to: Dn(complex(3+2j), 'A')
@@ -133,7 +133,7 @@ Controlling Display Formatting
 
 Dimensioned numbers make a valiant attempt to unwind the units that
 result from a chain of arithmetic into a presentable string.
-Calling str() on an instance of Dn() will return a string that
+Calling ``str()`` on an instance of ``Dn()`` will return a string that
 has the number concantenated with a string spelling out the units.
 A lot of times, it will make good sense.
 But sometimes the output will look pretty strange.
@@ -142,15 +142,15 @@ For example, Hertz is the unit for 1/second.
 It is perfectly correct to say: meter-Hertz, but that
 looks pretty odd since we are accustomed to seeing meter/second.
 
-Even though the default constructor for unit string does a decent
+Even though the default formatter for units does a decent
 job, sometimes you may want to control things yourself.
 There are two ways to do that:
 
-- You can explictly set a preferred display format using prefer().
+- You can explictly set a preferred display format using ``prefer()``.
 - You can control the order that derived units are factored out
-  of a complex unit using set_factor_order().
+  of a complex unit using ``set_factor_order()``.
 
-The prefer() function is very straight-forward.
+The ``prefer()`` function is very straight-forward.
 Let's say you don't like the default display the canonical unit group FIXME,
 which is FIXME, but would rather see FIXME. 
 Simply say ``prefer(FIXME)``. 
@@ -173,8 +173,8 @@ beyond the current factoring capability of siunits.
 For cases where the unit group doesn't factor at all, the best
 way to get a nice display string is to use ``prefer()``.
 
-Sometimes, the factoring for display can be improved by factoring
-out derived units in some other order than the default order.
+Sometimes, the factoring for ``__str__()`` can be improved by factoring
+out derived units in some order other than the default.
 This is where ``set_factor_order()`` comes into play.
 Call ``set_factor_order()`` with a list of unit abbreviations 
 (or unit names) in the order in which they should be tried.
