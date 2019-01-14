@@ -834,7 +834,7 @@ def sqrt(dimensioned_number):
     return dimensioned_number.sqrt()
 
 def root(dimensioned_number, n):
-    """Take the n-th rood of a Dn() instance.  All of the
+    """Take the n-th root of a Dn() instance.  All of the
     dimension exponents must be divisible by n.  math.pow() is
     called with an exponent of 1.0/float(n) on the numeric
     part of the dimensioned number.
@@ -857,7 +857,7 @@ def set_factor_order(derived_unit_list):
     """Set the prefered factoring order for attempting to find
     derived units withing a complex dimension.
 
-    :params derived_unit_list: A list of derived unit names and/or
+    :param derived_unit_list: A list of derived unit names and/or
         abbreviations.
     """
     du = []
